@@ -28,6 +28,7 @@ class ComponentPure extends PureComponent {
     console.log('render App');
     return (
       <div className="App">
+          <h2> I am pure component. </h2>
           <Temp val={this.state.val}/>
       </div>
     );

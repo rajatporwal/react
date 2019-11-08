@@ -21,6 +21,7 @@ class Binding extends Component {
   render() {
     return (
       <div className="App">
+        <h3> Binding Example</h3>
       <br/>
       {/* two way binding */}
       <input type="text" onChange={this.changeNameFromInput} value={this.state.name}/>
