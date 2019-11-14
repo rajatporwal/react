@@ -1,10 +1,12 @@
 import React, { Component } from 'react';
-import { BrowserRouter as Router, Link, NavLink, Redirect, Prompt} from 'react-router-dom';
-import Route from 'react-router-dom/Route';
+import { BrowserRouter as Router, Route, /* Link , */ NavLink, Redirect, /* Prompt */} from 'react-router-dom';
 import Users from './components/ClassComponent';
 import './App.css';
 import Binding from './components/Binding';
 import ComponentPure from './components/PureComponent';
+import PropTypesComponent from './components/PropTypes';
+import PropTypes from 'prop-types';
+
 
 // we can use match for fetching data from URL's without even passing it from Component.
 const User = ({match}) => {
@@ -14,6 +16,20 @@ const User = ({match}) => {
 // if we passed data as parameter than we will receive it in params
 const UserLogin = (params) => {
   return ( <h1> Welcome User {params.username} </h1>)
+}
+
+PropTypesComponent.propTypes = {
+  str: PropTypes.string,
+  bool: PropTypes.bool,
+  strOrNum: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
+  ary: PropTypes.arrayOf([PropTypes.number]),
+  aryOfObj: PropTypes.arrayOf(PropTypes.shape(
+    {
+      name: PropTypes.string,
+      age: PropTypes.number
+    }
+  ))
+
 }
 
 class App extends Component {
@@ -33,38 +49,42 @@ class App extends Component {
 
       <Router>
         <div className="App">
-          
-        <ul>
-          <li>
-            <NavLink to="/" exact activeStyle={
-              { color:'green' }
-            }>Home</NavLink>
-          </li>
-          <li>
-            <NavLink to="/users" exact activeStyle={
-              { color:'green' }
-            }>Users</NavLink>
-          </li>
-          <li>
-            <NavLink to="/binding" exact activeStyle={
-              { color:'green' }
-            }>Binding</NavLink>
-          </li>
-          <li>
-            <NavLink to="/pureComponent" exact activeStyle={
-              { color:'green' }
-            }>Pure Component</NavLink>
-          </li>
-          <li>
-            <NavLink to="/user/john" exact activeStyle={
-              { color:'green' }
-            }>User John</NavLink>
-          </li>
-          <li>
-            <NavLink to="/user/peter" exact activeStyle={
-              { color:'green' }
-            }>User Peter</NavLink>
-          </li>
+          <ul>
+            <li>
+              <NavLink to="/" exact activeStyle={
+                { color:'green' }
+              }>Home</NavLink>
+            </li>
+            <li>
+              <NavLink to="/users" exact activeStyle={
+                { color:'green' }
+              }>Users</NavLink>
+            </li>
+            <li>
+              <NavLink to="/binding" exact activeStyle={
+                { color:'green' }
+              }>Binding</NavLink>
+            </li>
+            <li>
+              <NavLink to="/pureComponent" exact activeStyle={
+                { color:'green' }
+              }>Pure Component</NavLink>
+            </li>
+            <li>
+              <NavLink to="/propTypesComponent" exact activeStyle={
+                { color:'green' }
+              }>Prop Types Component</NavLink>
+            </li>
+            <li>
+              <NavLink to="/user/john" exact activeStyle={
+                { color:'green' }
+              }>User John</NavLink>
+            </li>
+            <li>
+              <NavLink to="/user/peter" exact activeStyle={
+                { color:'green' }
+              }>User Peter</NavLink>
+            </li>
           </ul>
 
           {/* <Prompt
@@ -100,6 +120,19 @@ class App extends Component {
 
           <Route path="/pureComponent" exact strict component = {ComponentPure}/>
 
+          <Route path="/propTypesComponent" exact render = { () => {
+            return (
+              <PropTypesComponent 
+                  str="Users List"
+                  bool
+                  strOrNum = {10}
+                  ary = {[10, 20, 30]}
+                  aryOfObj = {[{name: "peter", age: 21}, {name: "john", age: 20}]}
+                />
+              )
+            } 
+          }/>
+
           <Route path="/user" exact strict component = {User}/>
 
           <Route path="/user/:username" exact strict render={({match})=>(
@@ -110,16 +143,6 @@ class App extends Component {
 
       </Router>
 
-
-      // <div className="App">
-
-      //   <Users title="Users List"/>
-
-      //   <Binding />
-
-      //   <ComponentPure />
-        
-      // </div>
     );
   }
 }
