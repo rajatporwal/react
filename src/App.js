@@ -6,6 +6,7 @@ import Binding from './components/Binding';
 import ComponentPure from './components/PureComponent';
 import PropTypesComponent from './components/PropTypes';
 import PropTypes from 'prop-types';
+import RefsAndDoms from './components/RefsAndDoms';
 
 
 // we can use match for fetching data from URL's without even passing it from Component.
@@ -76,6 +77,11 @@ class App extends Component {
               }>Prop Types Component</NavLink>
             </li>
             <li>
+              <NavLink to="/refsAndDoms" exact activeStyle={
+                { color:'green' }
+              }>Ref and DOM Component</NavLink>
+            </li>
+            <li>
               <NavLink to="/user/john" exact activeStyle={
                 { color:'green' }
               }>User John</NavLink>
@@ -119,6 +125,8 @@ class App extends Component {
           <Route path="/binding" exact strict component = {Binding}/>
 
           <Route path="/pureComponent" exact strict component = {ComponentPure}/>
+
+          <Route path="/refsAndDoms" exact strict component = {RefsAndDoms}/>
 
           <Route path="/propTypesComponent" exact render = { () => {
             return (
