@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { Component, lazy, Suspense} from 'react';
 import { BrowserRouter as Router, Route, /* Link , */ NavLink, Redirect, /* Prompt */} from 'react-router-dom';
 import Users from './components/ClassComponent';
 import './App.css';
@@ -8,6 +8,7 @@ import PropTypesComponent from './components/PropTypes';
 import PropTypes from 'prop-types';
 import RefsAndDoms from './components/RefsAndDoms';
 
+const LazyComp = lazy(() => import("./components/LazyLoadedComponent"));
 
 // we can use match for fetching data from URL's without even passing it from Component.
 const User = ({match}) => {
@@ -67,6 +68,11 @@ class App extends Component {
               }>Binding</NavLink>
             </li>
             <li>
+              <NavLink to="/lazy" exact activeStyle={
+                { color:'green' }
+              }>Lazy Loading</NavLink>
+            </li>
+            <li>
               <NavLink to="/pureComponent" exact activeStyle={
                 { color:'green' }
               }>Pure Component</NavLink>
@@ -123,6 +129,12 @@ class App extends Component {
           in both of these paths <Binding /> component will run. */}
 
           <Route path="/binding" exact strict component = {Binding}/>
+
+          <Route path="/lazy" exact strict render={ () => (
+             <Suspense fallback={<div>Loading.....</div>}>
+              <LazyComp />
+            </Suspense>
+          )}/>
 
           <Route path="/pureComponent" exact strict component = {ComponentPure}/>
 
